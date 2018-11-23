@@ -12,6 +12,7 @@ class App extends Component {
   render(){
     return(
       <div  className={'container'} ref={this.node}>
+        <h1>Data view using D3.js</h1>
         <D3 node={this.node}/>
       </div >
     )

@@ -41,6 +41,7 @@ const Data = [
 ]
 
 class D3 extends Component {
+
     constructor(props){
         super(props)
         this.node = React.createRef();
@@ -54,22 +55,42 @@ class D3 extends Component {
     }
 
     ramdom_to_pos(){
-        return Math.floor(Math.random()*100);
+        return Math.floor(Math.random()*50);
     }
 
     generateNodes(data, node) {
-
         return data.map((item)=>{
             const x = this.ramdom_to_pos();
             const y = this.ramdom_to_pos();
             const rgba = this.random_rgba();
-            return (
+            const r = item.range*3;
+            const element = (
                 node
                 .append("g")
                 .attr("transform", `translate(${x},${y})`)
+            )
+            
+            /*eslint-disable */
+            const elementCircle = (
+                element
                 .append("circle")
-                .attr("r",`${item.range*2}`)
+                .attr("r",`${r}`)
                 .attr("fill",`${rgba}`)
+                .attr("preserveAspectRatio", "xMidYMid meet")
+            )
+            
+            /*eslint-disable */
+            const elementText = (
+                element
+                .append("text")
+                .text(`${item.name}`)
+                .attr("font-size", "5px")
+                .attr("fill", "white")
+                .attr("dx", `${r+(5/2)}`)
+                .attr("dy", 3)
+            )
+            return (
+                element  
             )
         })
     }
@@ -82,9 +103,7 @@ class D3 extends Component {
         .style("background-color","#1e1e1e")
         .style("border-radius","20px")
 
-        var nodes = this.generateNodes(Data, node);
-        console.log(nodes, 'nodes')
-
+        this.generateNodes(Data, node);
     }
     
     render(){
